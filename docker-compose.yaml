@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  userservice:
+    build: ./userservice
+    container_name: userservice
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mongo
+      - rabbitmq
+      - redis
+
+  contentservice:
+    build: ./contentservice
+    container_name: contentservice
+    ports:
+      - "4002:4002"
+    depends_on:
+      - mongo
+      - rabbitmq
+      - redis
+
+  courseservice:
+    build: ./courseservice
+    container_name: courseservice
+    ports:
+      - "4003:4003"
+    depends_on:
+      - mongo
+      - rabbitmq
+      - redis
+
+  authservice:
+    build: ./authservice
+    container_name: authservice
+    ports:
+      - "4004:4004"
+    depends_on:
+      - mongo
+      - rabbitmq
+      - redis
+
+  instituteservice:
+    build: ./instituteservice
+    container_name: instituteservice
+    ports:
+      - "4005:4005"
+    depends_on:
+      - mongo
+      - rabbitmq
+      - redis
+
+volumes:
+  mongo_data:
+
