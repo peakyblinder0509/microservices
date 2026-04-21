@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sshagent(['pat-creds']) {
                     sh '''
-                        ssh -A -o StrictHostKeyChecking=no ubuntu@43.204.25.189 \
+                        ssh -A -o StrictHostKeyChecking=no ubuntu@13.232.22.61 \
                             "set -e && \
                             cd /home/ubuntu/microservices && \
                             rm -rf microservices || true && \
