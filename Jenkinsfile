@@ -5,16 +5,16 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    credentialsId: 'pat-creds',
+                    credentialsId: 'crm-creds',
                     url: 'https://github.com/peakyblinder0509/microservices.git'
             }
         }
  
         stage('Deploy to EC2') {
             steps {
-                sshagent(['pat-creds']) {
+                sshagent(['crm-creds']) {
                     sh '''
-                        ssh -A -o StrictHostKeyChecking=no ubuntu@13.232.22.61 \
+                        ssh -A -o StrictHostKeyChecking=no ubuntu@13.201.117.1 \
                             "set -e && \
                             cd /home/ubuntu/microservices && \
                             rm -rf microservices || true && \
